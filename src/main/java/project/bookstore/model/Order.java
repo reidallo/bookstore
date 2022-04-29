@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "order_order")
+@Table(name = "order_book")
 public class Order extends Base {
 
     private LocalDate date;
