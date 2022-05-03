@@ -14,8 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table
-public class Book extends Base{
+public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String title;
     private String description;
     private Double price;

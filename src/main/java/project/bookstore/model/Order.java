@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,11 +15,16 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_book")
-public class Order extends Base {
+public class Order {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private LocalDate date;
     private Double total;
     @ManyToOne
     @JoinColumn(name = "fk_customer", referencedColumnName = "id")
     private Customer customer;
+    @OneToMany(mappedBy = "order")
+    private Set<OrderItem> orderItems;
 }

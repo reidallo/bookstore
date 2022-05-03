@@ -14,8 +14,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table
-public class Customer extends Base{
+public class Customer {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstName;
     private String lastName;
     private String address;
@@ -28,5 +31,4 @@ public class Customer extends Base{
     private User user;
     @OneToMany(mappedBy = "customer")
     private Set<Order> orders;
-
 }

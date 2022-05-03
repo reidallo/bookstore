@@ -11,8 +11,11 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "bookstore_role")
-public class Role extends Base{
+public class Role {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     @OneToMany(mappedBy = "role")
     private Set<User> users;
