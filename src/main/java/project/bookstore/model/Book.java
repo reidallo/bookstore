@@ -13,7 +13,6 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table
 public class Book {
 
     @Id
@@ -21,12 +20,11 @@ public class Book {
     private Long id;
     private String title;
     private String description;
-    private Double price;
+    private double price;
     @ManyToMany
-    @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "fk_book"), inverseJoinColumns = @JoinColumn(name = "fk_author"))
+    @JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "fk_book"), inverseJoinColumns = @JoinColumn(name = "fk_author"))
     private Set<Author> authors;
     @ManyToMany
-    @JoinTable(name = "book_category", joinColumns = @JoinColumn(name = "fk_book"), inverseJoinColumns = @JoinColumn(name = "fk_category"))
+    @JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "fk_book"), inverseJoinColumns = @JoinColumn(name = "fk_category"))
     private Set<Category> categories;
-
 }

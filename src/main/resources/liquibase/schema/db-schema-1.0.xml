@@ -1,0 +1,16 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+
+    <changeSet id="1" author="reidallo" context="add bio column to author table">
+        <addColumn tableName="author">
+            <column name="bio" type="varchar(999)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="2" author="reidallo" context="add not null constrain">
+        <addNotNullConstraint tableName="book" columnName="title" columnDataType="varchar(50)"/>
+    </changeSet>
+    
+</databaseChangeLog>
