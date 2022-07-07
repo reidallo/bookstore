@@ -13,7 +13,6 @@ import project.bookstore.repository.RoleRepository;
 import project.bookstore.repository.UserRepository;
 import project.bookstore.security.request.RegisterRequest;
 import project.bookstore.service.UserService;
-import project.bookstore.statics.ERole;
 
 import javax.transaction.Transactional;
 import java.util.HashSet;
@@ -46,7 +45,7 @@ public class UserServiceImpl implements UserService {
                 .username(request.getUsername())
                 .build();
 
-        Role role = roleRepository.findByName(ERole.ROLE_CUSTOMER)
+        Role role = roleRepository.findByName("ROLE_CUSTOMER")
                 .orElseThrow(() -> new IllegalStateException("Role is not found!"));
 
         Set<Role> roles= new HashSet<>();

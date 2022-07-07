@@ -3,6 +3,7 @@ package project.bookstore.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import project.bookstore.security.request.RegisterRequest;
 import project.bookstore.service.UserService;

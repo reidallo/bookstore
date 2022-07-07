@@ -22,7 +22,7 @@ public class UserDetailsImpl implements UserDetails {
     private boolean active;
 
     public static UserDetailsImpl build(User user) {
-        Set<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName().name()))
+        Set<GrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                 .collect(Collectors.toSet());
         return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities, user.isActive());
     }

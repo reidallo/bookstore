@@ -17,7 +17,7 @@
         <modifyDataType tableName="user" columnName="password" newDataType="varchar(255)"/>
     </changeSet>
 
-    <changeSet id="4" author="reidallo" context="change datatype of id column at user table">
+    <changeSet id="4" author="reidallo" context="change datatype of id column at user_roles table">
         <modifyDataType tableName="user_roles" columnName="fk_user" newDataType="uuid"/>
     </changeSet>
 
