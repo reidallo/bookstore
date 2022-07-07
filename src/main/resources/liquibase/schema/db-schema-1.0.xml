@@ -1,7 +1,7 @@
 <databaseChangeLog
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
 
     <changeSet id="1" author="reidallo" context="add bio column to author table">
         <addColumn tableName="author">
@@ -12,5 +12,19 @@
     <changeSet id="2" author="reidallo" context="add not null constrain">
         <addNotNullConstraint tableName="book" columnName="title" columnDataType="varchar(50)"/>
     </changeSet>
-    
+
+    <changeSet id="3" author="reidallo" context="change datatype of password column at user table">
+        <modifyDataType tableName="user" columnName="password" newDataType="varchar(255)"/>
+    </changeSet>
+
+    <changeSet id="4" author="reidallo" context="change datatype of id column at user table">
+        <modifyDataType tableName="user_roles" columnName="fk_user" newDataType="uuid"/>
+    </changeSet>
+
+    <changeSet id="5" author="reidallo" context="add active column to user table">
+        <addColumn tableName="user">
+            <column name="active" type="boolean"/>
+        </addColumn>
+    </changeSet>
+
 </databaseChangeLog>

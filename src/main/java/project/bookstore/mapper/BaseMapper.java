@@ -1,6 +1,6 @@
 package project.bookstore.mapper;
 
-public interface BaseMapper<K, P> {
-    K toEntity(P p);
-    P toDto(K k);
+public interface BaseMapper<E, D> {
+    E toEntity(D p);
+    D toDto(E e);
 }
