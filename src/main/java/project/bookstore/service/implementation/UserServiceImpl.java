@@ -1,6 +1,8 @@
 package project.bookstore.service.implementation;
 
 import lombok.AllArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.bookstore.model.Customer;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JavaMailSender mailSender;
 
     @Transactional
     @Override
@@ -57,5 +60,15 @@ public class UserServiceImpl implements UserService {
                 .user(user)
                 .build();
         customerRepository.save(customer);
+    }
+
+    @Override
+    public void sendConfirmationEmail(String to, String subject, String text) {
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        mailSender.send(message);
     }
 }
