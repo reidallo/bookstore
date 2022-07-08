@@ -1,6 +1,11 @@
 package project.bookstore.service.implementation;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import project.bookstore.dto.MailVerificationTokenDto;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -14,7 +19,10 @@ import project.bookstore.repository.CustomerRepository;
 import project.bookstore.repository.MailVerificationRepository;
 import project.bookstore.repository.RoleRepository;
 import project.bookstore.repository.UserRepository;
+import project.bookstore.security.jwt.JwtUtils;
+import project.bookstore.security.request.LoginRequest;
 import project.bookstore.security.request.RegisterRequest;
+import project.bookstore.security.response.JwtResponse;
 import project.bookstore.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,14 +41,18 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final CustomerRepository customerRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final JwtUtils jwtUtils;
 
-    public UserServiceImpl(MailVerificationRepository mailVerificationRepository, JavaMailSender mailSender, UserRepository userRepository, RoleRepository roleRepository, CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(MailVerificationRepository mailVerificationRepository, JavaMailSender mailSender, UserRepository userRepository, RoleRepository roleRepository, CustomerRepository customerRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.mailVerificationRepository = mailVerificationRepository;
         this.mailSender = mailSender;
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.customerRepository = customerRepository;
         this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
     }
 
     @Override
@@ -90,11 +102,15 @@ public class UserServiceImpl implements UserService {
 
         mailVerificationRepository.save(mailVerificationToken);
 
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(user.getEmail());
-        message.setSubject("Registration Confirmation");
-        message.setText("Click the link to confirm your email: " + url);
-        mailSender.send(message);
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(user.getEmail());
+            message.setSubject("Registration Confirmation");
+            message.setText("Click the link to confirm your email: " + url);
+            mailSender.send(message);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -119,5 +135,16 @@ public class UserServiceImpl implements UserService {
                 new IllegalStateException("User not found"));
         user.setActive(true);
         userRepository.save(user);
+    }
+
+    @Override
+    public JwtResponse login(LoginRequest request) {
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        String token = jwtUtils.generateJwtToken(authentication);
+        return new JwtResponse(token);
     }
 }

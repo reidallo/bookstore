@@ -1,7 +1,9 @@
 package project.bookstore.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import project.bookstore.security.request.LoginRequest;
 import project.bookstore.security.request.RegisterRequest;
 import project.bookstore.service.UserService;
 
@@ -22,5 +24,10 @@ public class UserController {
     @PostMapping(value = "/register")
     public void registerUser(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest) {
         userService.register(request, httpRequest);
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<?> authenticate(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(userService.login(request));
     }
 }
