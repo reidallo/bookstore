@@ -1,13 +1,11 @@
 package project.bookstore.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.bookstore.security.request.RegisterRequest;
 import project.bookstore.service.UserService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @RestController
@@ -16,8 +14,13 @@ public class UserController {
 
     private final UserService userService;
 
+    @GetMapping(value = "/confirmRegistration")
+    public void confirmRegistration(@RequestParam String token) {
+        userService.confirmRegistration(token);
+    }
+
     @PostMapping(value = "/register")
-    public void registerUser(@Valid @RequestBody RegisterRequest request) {
-        userService.register(request);
+    public void registerUser(@Valid @RequestBody RegisterRequest request, HttpServletRequest httpRequest) {
+        userService.register(request, httpRequest);
     }
 }

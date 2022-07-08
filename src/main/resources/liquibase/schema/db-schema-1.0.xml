@@ -27,4 +27,29 @@
         </addColumn>
     </changeSet>
 
+
+    <changeSet id="6" author="reidallo" context="create mail verification token table">
+        <createTable tableName="mail_verification">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="token" type="char(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="expiration_date" type="date">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fk_user" type="uuid">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="mail_verification" baseColumnNames="fk_user"
+                                 constraintName="fk_user_token" referencedTableName="user"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="7" author="reidallo" context="add unique constraint to mail_verification table">
+        <addUniqueConstraint tableName="mail_verification" columnNames="token"/>
+    </changeSet>
 </databaseChangeLog>
