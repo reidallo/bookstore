@@ -89,39 +89,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void sendConfirmationEmail(MailVerificationTokenDto mailVerificationDto) {
-
-        User user = mailVerificationDto.getUser();
-        String token = UUID.randomUUID().toString();
-        String url = "http://localhost:8080" + mailVerificationDto.getUrl() + "/confirmRegistration?token=" + token;
-
-        MailVerificationToken mailVerificationToken = new MailVerificationToken();
-        mailVerificationToken.setUser(user);
-        mailVerificationToken.setToken(token);
-        mailVerificationToken.setExpirationDate(calculateExpirationDate(expiration));
-
-        mailVerificationRepository.save(mailVerificationToken);
-
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(user.getEmail());
-            message.setSubject("Registration Confirmation");
-            message.setText("Click the link to confirm your email: " + url);
-            mailSender.send(message);
-        } catch (MailException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public Date calculateExpirationDate(int expiration) {
-
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, expiration);
-        return new Date(calendar.getTime().getTime());
-    }
-
-    @Override
     public void confirmRegistration(String token) {
 
         MailVerificationToken mailVerificationToken = mailVerificationRepository.findByToken(token).orElseThrow(() ->
@@ -146,5 +113,36 @@ public class UserServiceImpl implements UserService {
 
         String token = jwtUtils.generateJwtToken(authentication);
         return new JwtResponse(token);
+    }
+
+    private void sendConfirmationEmail(MailVerificationTokenDto mailVerificationDto) {
+
+        User user = mailVerificationDto.getUser();
+        String token = UUID.randomUUID().toString();
+        String url = "http://localhost:8080" + mailVerificationDto.getUrl() + "/confirmRegistration?token=" + token;
+
+        MailVerificationToken mailVerificationToken = new MailVerificationToken();
+        mailVerificationToken.setUser(user);
+        mailVerificationToken.setToken(token);
+        mailVerificationToken.setExpirationDate(calculateExpirationDate(expiration));
+
+        mailVerificationRepository.save(mailVerificationToken);
+
+        try {
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(user.getEmail());
+            message.setSubject("Registration Confirmation");
+            message.setText("Click the link to confirm your email: " + url);
+            mailSender.send(message);
+        } catch (MailException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Date calculateExpirationDate(int expiration) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, expiration);
+        return new Date(calendar.getTime().getTime());
     }
 }

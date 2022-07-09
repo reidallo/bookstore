@@ -1,4 +1,4 @@
-package project.bookstore.security;
+package project.bookstore.configuration;
 
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -47,8 +47,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .authorizeRequests().antMatchers("/login", "/register", "/confirmRegistration").permitAll()
                 .anyRequest().authenticated();
-//                .and().formLogin();
-
-//        http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }
