@@ -24,7 +24,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookDtoOut> getBookByTitle(String search, String terms) throws IOException {
 
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + search + "+" + terms + "&" + API_KEY;
+        //https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=yourAPIKey
+        String url = "https://www.googleapis.com/books/v1/volumes?q=" + search + "+inauthor:" + terms + "&" + API_KEY;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
@@ -41,7 +42,9 @@ public class BookServiceImpl implements BookService {
             JsonNode authorsField = node.path("volumeInfo").path("authors");
             for (JsonNode auhtorNode : authorsField) {
                 AuthorDtoOut authorDtoOut = new AuthorDtoOut();
-                authorDtoOut.setFirstName(auhtorNode.asText());
+
+                authorDtoOut.setFirstName(auhtorNode.asText().split(" ")[0]);
+                authorDtoOut.setLastName(auhtorNode.asText().split(" ")[1]);
                 authors.add(authorDtoOut);
             }
             bookDtoOut.setAuthors(new HashSet<>(authors));
