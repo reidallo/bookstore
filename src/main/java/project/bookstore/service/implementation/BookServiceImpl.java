@@ -20,6 +20,8 @@ import java.util.List;
 @Service
 public class BookServiceImpl implements BookService {
 
+    @Value("${EXTERNAL_API}")
+    private String EXTERNAL_API;
     @Value("${API_KEY}")
     private String API_KEY;
 
@@ -28,7 +30,7 @@ public class BookServiceImpl implements BookService {
 
         //external api
         //https://www.googleapis.com/books/v1/volumes?q=flowers+inauthor:keyes&key=yourAPIKey
-        String url = "https://www.googleapis.com/books/v1/volumes?q=" + name + "+" + searchBy +":" + terms + "&key=" + API_KEY ;
+        String url = EXTERNAL_API + "?q=" + name + "+" + searchBy +":" + terms + "&key=" + API_KEY ;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
@@ -46,7 +48,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDtoOut getBookById(String id) throws JsonProcessingException {
 
-        String url = "https://www.googleapis.com/books/v1/volumes/" + id + "?key=" + API_KEY;
+        String url = EXTERNAL_API + "/" + id + "?key=" + API_KEY;
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
