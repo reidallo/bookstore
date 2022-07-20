@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void register(RegisterRequest request, HttpServletRequest httpRequest) {
 
+        //check if user is already registered
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new IllegalStateException("User with email: " + request.getEmail() + " already exists!");
         }
@@ -94,6 +95,7 @@ public class UserServiceImpl implements UserService {
         MailVerificationToken mailVerificationToken = mailVerificationRepository.findByToken(token).orElseThrow(() ->
                 new IllegalStateException("This token is not valid!"));
 
+        //check if mail token has expired
         Calendar calendar = Calendar.getInstance();
         if (mailVerificationToken.getExpirationDate().getTime() - calendar.getTime().getTime() <= 0) {
             throw new IllegalStateException("This token has expired!");
@@ -141,6 +143,7 @@ public class UserServiceImpl implements UserService {
 
     private Date calculateExpirationDate(int expiration) {
 
+        //set mail token expiration date
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.MINUTE, expiration);
         return new Date(calendar.getTime().getTime());
