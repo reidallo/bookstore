@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -16,15 +15,10 @@ import java.util.Set;
 public class Book {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private String id;
     private String title;
     private String description;
-    private double price;
-    @ManyToMany
-    @JoinTable(name = "book_authors", joinColumns = @JoinColumn(name = "fk_book"), inverseJoinColumns = @JoinColumn(name = "fk_author"))
-    private Set<Author> authors;
-    @ManyToMany
-    @JoinTable(name = "book_categories", joinColumns = @JoinColumn(name = "fk_book"), inverseJoinColumns = @JoinColumn(name = "fk_category"))
-    private Set<Category> categories;
+    private Double price;
+    private String authors;
+    private String categories;
 }

@@ -29,20 +29,10 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="3" author="reidallo" context="create author table">
-        <createTable tableName="author">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="first_name" type="varchar(25)"/>
-            <column name="last_name" type="varchar(25)"/>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="4" author="reidallo" context="create book table">
+    <changeSet id="3" author="reidallo" context="create book table">
         <createTable tableName="book">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
+            <column name="id" type="char(36)">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
             </column>
             <column name="title" type="varchar(50)"/>
             <column name="description" type="varchar(999)"/>
@@ -50,34 +40,7 @@
         </createTable>
     </changeSet>
 
-    <changeSet id="5" author="reidallo" context="create category table">
-        <createTable tableName="category">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(50)">
-                <constraints nullable="false" unique="true"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="6" author="reidallo" context="create inventory table">
-        <createTable tableName="inventory">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="quantity" type="bigint"/>
-            <column name="fk_book" type="int">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addForeignKeyConstraint baseTableName="inventory" baseColumnNames="fk_book"
-                                 constraintName="fk_book" referencedTableName="book"
-                                 referencedColumnNames="id"/>
-    </changeSet>
-
-    <changeSet id="7" author="reidallo" context="create customer table">
+    <changeSet id="4" author="reidallo" context="create customer table">
         <createTable tableName="customer">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -103,7 +66,7 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="8" author="reidallo" context="create order table">
+    <changeSet id="5" author="reidallo" context="create order table">
         <createTable tableName="order">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -119,7 +82,7 @@
                                  referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="9" author="reidallo" context="create order_item table">
+    <changeSet id="6" author="reidallo" context="create order_item table">
         <createTable tableName="order_item">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -127,7 +90,7 @@
             <column name="date" type="date"/>
             <column name="quantity" type="bigint"/>
             <column name="price" type="decimal(9,2)"/>
-            <column name="fk_book" type="int">
+            <column name="fk_book" type="char(36)">
                 <constraints nullable="false"/>
             </column>
             <column name="fk_order" type="int">
@@ -136,41 +99,19 @@
         </createTable>
 
         <addForeignKeyConstraint baseTableName="order_item" baseColumnNames="fk_book"
-                                 constraintName="fk_book_order" referencedTableName="book"
+                                 constraintName="fk_book" referencedTableName="book"
                                  referencedColumnNames="id"/>
         <addForeignKeyConstraint baseTableName="order_item" baseColumnNames="fk_order"
                                  constraintName="fk_order" referencedTableName="order"
                                  referencedColumnNames="id"/>
     </changeSet>
 
-    <changeSet id="10" author="reidallo" context="create user_roles table">
+    <changeSet id="7" author="reidallo" context="create user_roles table">
         <createTable tableName="user_roles">
             <column name="fk_user" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="fk_role" type="int">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="11" author="reidallo" context="create book_authors table">
-        <createTable tableName="book_authors">
-            <column name="fk_book" type="int">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="fk_author" type="int">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-        </createTable>
-    </changeSet>
-
-    <changeSet id="12" author="reidallo" context="create book_categories table">
-        <createTable tableName="book_categories">
-            <column name="fk_book" type="int">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="fk_category" type="int">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
         </createTable>
