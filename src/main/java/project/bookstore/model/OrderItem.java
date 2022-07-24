@@ -22,7 +22,7 @@ public class OrderItem {
     @Temporal(TemporalType.DATE)
     private Date date;
     private Integer quantity;
-    private Double price;
+    private double price;
     @OneToOne
     @JoinColumn(name = "fk_book", referencedColumnName = "id")
     private Book book;
