@@ -23,7 +23,7 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "fk_customer", referencedColumnName = "id")
     private Customer customer;
-    @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "order")
     private Set<OrderItem> orderItems;
     private boolean active;
 }

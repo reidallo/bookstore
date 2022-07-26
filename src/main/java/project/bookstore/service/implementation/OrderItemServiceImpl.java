@@ -81,4 +81,12 @@ public class OrderItemServiceImpl implements OrderItemService {
         orderItemSet.add(orderItem);
         order.setOrderItems(orderItemSet);
     }
+
+    @Override
+    public void removeOrderItem(Long id) {
+
+        OrderItem orderItem = orderItemRepository.findById(id).orElseThrow(() ->
+                new IllegalStateException("This order item does not exist!"));
+        orderItemRepository.delete(orderItem);
+    }
 }

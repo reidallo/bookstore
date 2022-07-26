@@ -1,5 +1,6 @@
 package project.bookstore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -26,5 +27,6 @@ public class Customer {
     private Set<Order> orders;
     @OneToOne
     @JoinColumn(name = "fk_user", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 }

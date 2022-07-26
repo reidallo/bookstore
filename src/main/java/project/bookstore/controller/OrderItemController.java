@@ -1,10 +1,7 @@
 package project.bookstore.controller;
 
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import project.bookstore.dto.BookDto;
 import project.bookstore.service.OrderItemService;
 
@@ -17,5 +14,10 @@ public class OrderItemController {
     @PostMapping(value = "/order/item")
     public void addOrderItem(@RequestBody BookDto bookDto, @RequestParam Integer quantity) {
         orderItemService.addOrderItem(bookDto, quantity);
+    }
+
+    @DeleteMapping(value = "/order/item")
+    public void removeOrderItem(@RequestParam Long id) {
+        orderItemService.removeOrderItem(id);
     }
 }
