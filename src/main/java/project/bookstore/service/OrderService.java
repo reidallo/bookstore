@@ -10,5 +10,5 @@ public interface OrderService {
 
     List<OrderDto> getAllActiveOrders();
 
-    OrderDto getAllOrdersOfACustomer(Long customerId);
+    OrderDto getActiveOrderOfACustomer(Long customerId);
 }

@@ -15,7 +15,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
             "LEFT JOIN bookstore.user AS u ON c.fk_user = u.id WHERE u.username LIKE :username AND o.active = true", nativeQuery = true)
     Optional<Order> findOrderByActiveAndCustomer(String username);
 
+    @Query(value = "SELECT o.* FROM bookstore.order_bookstore AS o LEFT JOIN bookstore.order_item AS oi ON o.id = oi.fk_order \n" +
+            "WHERE oi.id = :orderItemId", nativeQuery = true)
+    Optional<Order> findOrderByOrderItemId(Long orderItemId);
+
     List<Order> findAllByActiveIsTrue();
 
     Order findByActiveIsTrueAndCustomer_Id(Long customerId);
+
+
 }

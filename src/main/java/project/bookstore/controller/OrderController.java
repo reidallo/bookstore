@@ -27,7 +27,7 @@ public class OrderController {
     }
 
     @GetMapping(value = "/orders/customer")
-    public ResponseEntity<OrderDto> getAllOrdersOfACustomer(@RequestParam Long customerId) {
-        return ResponseEntity.ok(orderService.getAllOrdersOfACustomer(customerId));
+    public ResponseEntity<OrderDto> getActiveOrderOfACustomer(@RequestParam Long customerId) {
+        return ResponseEntity.ok(orderService.getActiveOrderOfACustomer(customerId));
     }
 }

@@ -19,6 +19,12 @@ public class BookController {
 
     private final BookService bookService;
 
+    /*
+    An external API is called to get the books
+    We can specify the name of the book (name),
+    We can specify if we want to search by title, name, category etc. (with the keywords: intitle, inauthor, subject,
+    specified on searchBy parameter and name/title/category specified on terms parameter)
+     */
     @GetMapping(value = "/books")
     public ResponseEntity<List<BookDto>> getBooks(
             @RequestParam String name,

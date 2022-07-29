@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
 
     //A customer should have only one active order
     @Override
-    public OrderDto getAllOrdersOfACustomer(Long customerId) {
+    public OrderDto getActiveOrderOfACustomer(Long customerId) {
         return orderMapper.toDto(orderRepository.findByActiveIsTrueAndCustomer_Id(customerId));
     }
 }

@@ -87,6 +87,18 @@ public class OrderItemServiceImpl implements OrderItemService {
 
         OrderItem orderItem = orderItemRepository.findById(id).orElseThrow(() ->
                 new IllegalStateException("This order item does not exist!"));
+        Order order = orderRepository.findOrderByOrderItemId(id).orElseThrow(() ->
+                new IllegalStateException("This order does not exist!"));
+
+        //Change the total price of order after removing an order item
+        order.setTotal(order.getTotal() - orderItem.getPrice());
+
+        //Remove order item from order
+        Set<OrderItem> orderItemSet = order.getOrderItems();
+        orderItemSet.remove(orderItem);
+        order.setOrderItems(orderItemSet);
+
         orderItemRepository.delete(orderItem);
+        orderRepository.save(order);
     }
 }
