@@ -1,5 +1,6 @@
 package project.bookstore.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,11 +23,12 @@ public class OrderItem {
     @Temporal(TemporalType.DATE)
     private Date date;
     private Integer quantity;
-    private Double price;
+    private double price;
     @OneToOne
     @JoinColumn(name = "fk_book", referencedColumnName = "id")
     private Book book;
     @ManyToOne
     @JoinColumn(name = "fk_order", referencedColumnName = "id")
+    @JsonIgnore
     private Order order;
 }

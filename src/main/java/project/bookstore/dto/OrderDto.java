@@ -2,7 +2,6 @@ package project.bookstore.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import project.bookstore.model.Customer;
 
 import java.util.List;
 
@@ -12,6 +11,7 @@ public class OrderDto {
 
     private Long id;
     private Double total;
-    private Customer customer;
+    private CustomerDto customerDto;
     private List<OrderItemDto> orderItemDtoList;
+    private boolean active;
 }

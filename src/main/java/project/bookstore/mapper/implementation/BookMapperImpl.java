@@ -6,7 +6,6 @@ import project.bookstore.mapper.BookMapper;
 import project.bookstore.model.Book;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component
 public class BookMapperImpl implements BookMapper {
@@ -57,11 +56,7 @@ public class BookMapperImpl implements BookMapper {
     }
 
     @Override
-    public List<BookDto> toDtoList(List<Book> entityList) {
-
-        if (entityList == null)
-            return null;
-
-        return entityList.stream().map(this::toDto).collect(Collectors.toList());
+    public List<BookDto> toListDto(List<Book> entityList) {
+        return null;
     }
 }

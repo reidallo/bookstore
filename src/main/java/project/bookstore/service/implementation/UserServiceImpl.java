@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManager authenticationManager;
     private final JwtUtils jwtUtils;
 
+    //recommended over autowired type of injection
     public UserServiceImpl(MailVerificationRepository mailVerificationRepository, JavaMailSender mailSender, UserRepository userRepository, RoleRepository roleRepository, CustomerRepository customerRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
         this.mailVerificationRepository = mailVerificationRepository;
         this.mailSender = mailSender;

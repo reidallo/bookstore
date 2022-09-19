@@ -45,4 +45,23 @@
     <changeSet id="6" author="reidallo" context="add unique constraint to mail_verification table">
         <addUniqueConstraint tableName="mail_verification" columnNames="token"/>
     </changeSet>
+
+    <changeSet id="7" author="reidallo" context="add active column to order table">
+        <addColumn tableName="order">
+            <column name="active" type="boolean"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="8" author="reidallo" context="add authors and categories columns to book table">
+        <addColumn tableName="book">
+            <column name="authors" type="varchar(100)"/>
+        </addColumn>
+        <addColumn tableName="book">
+            <column name="categories" type="varchar(100)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="9" author="reidallo" context="change table name for order table">
+        <renameTable oldTableName="order" newTableName="order_bookstore"/>
+    </changeSet>
 </databaseChangeLog>
