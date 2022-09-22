@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import project.bookstore.security.jwt.JwtFilter;
 
 @Configuration
@@ -25,6 +26,15 @@ import project.bookstore.security.jwt.JwtFilter;
 )
 @AllArgsConstructor
 public class SecurityConfig {
+
+    private static final String[] AUTH_WHITELIST = {
+            "/authenticate",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/swagger-ui.html",
+            "/webjars/**"
+    };
 
     @Bean
     public JwtFilter tokenAuthenticationFilter() {
@@ -48,6 +58,7 @@ public class SecurityConfig {
                 .authorizeRequests().antMatchers("/login", "/register", "/confirmRegistration", "/books",
                         "/book/{id}")
                 .permitAll()
+                .and().authorizeRequests().antMatchers(AUTH_WHITELIST).permitAll()
                 .anyRequest().authenticated()
                 .and().logout()
                 .logoutUrl("/logout")
@@ -59,4 +70,10 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    @Bean
+    public InternalResourceViewResolver defaultViewResolver() {
+        return new InternalResourceViewResolver();
+    }
+
 }
