@@ -1,5 +1,5 @@
 # bookstore
-# Bookstore Management System
+# Bookstore Management System - Spring Boot
 
 ## Description
 
